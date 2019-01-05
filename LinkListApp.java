@@ -9,10 +9,10 @@ class Link
 	public Link next; // next link in list
 // -------------------------------------------------------------
 	public Link(int id, double dd) // constructor
-	{	
+	{
 		iData = id; // initialize data
-		dData = dd; // (‘next’ is automatically set to null)
-	} // 
+		dData = dd; // (next is automatically set to null)
+	} //
 // -------------------------------------------------------------
 	public void displayLink() // display ourself
 	{
@@ -48,7 +48,53 @@ class LinkList
 		first = first.next; // delete it: first-->old next
 		return temp; // return deleted link
 	}
-	
+// -------------------------------------------------------------
+	public LinkList uniqueList() // finding only unique elements provided the Linked List is sorted
+	{ // (assumes list not empty)
+		if (first == null) return new LinkList()
+		if (first.next == null) return this;
+		Link temp1 = first; // save reference to link
+		Link temp2 = temp1.next; // save reference to link
+		if (temp1.iData == temp2.iData && temp2.next == null) return new LinkList()
+		if (temp1.iData != temp2.iData && temp2.next == null) return this;
+		Link temp3 = temp2.next; // save reference to link
+		t1_to_be_deleted = false;
+		t2_to_be_deleted = false;
+		t3_to_be_deleted = false;
+		first_set = false;
+		while(temp3 != null || temp2 != null || temp1 != null)
+		{
+			if (temp3.iData != temp2.iData && temp2.iData != temp1.iData) {
+				if (t1_to_be_deleted && temp1 == first) {
+					first = first.next
+					 
+				}
+				if () {
+
+				}
+				temp1 = temp1.next;
+				temp2 = temp2.next;
+				temp3 = temp3.next;
+			}
+			if (temp1.iData != temp2.iData && temp2.iData == temp3.iData) {
+				temp1.next = temp3;
+				delete temp2;
+				t1_to_be_deleted = true;
+				temp2 = temp3;
+				if (temp2 != null) temp3 = temp3.next;
+			}
+			if (temp1.iData == temp2.iData && temp2.iData != temp3.iData) {
+				temp1.next = temp3;
+				delete temp2;
+				t1_to_be_deleted = true;
+				temp2 = temp3;
+				if (temp3 != null) temp3 = temp3.next;
+			}
+		}
+		return this; // return LinkList with only unique elements
+	}
+// -------------------------------------------------------------
+
 	public void displayList()
 	{
 		System.out.print("List (first-->last): ");
@@ -73,7 +119,7 @@ class LinkListApp
 		theList.insertFirst(66, 6.99);
 		theList.insertFirst(88, 8.99);
 		theList.displayList(); // display list
-			while( !theList.isEmpty() ) // until it’s empty,
+			while( !theList.isEmpty() ) // until its empty,
 			{
 				Link aLink = theList.deleteFirst(); // delete link
 				System.out.print("Deleted "); // display it
@@ -81,5 +127,12 @@ class LinkListApp
 				System.out.println("");
 			}
 		theList.displayList(); // display list
+		LinkList sortedList = new LinkList(); // make new list
+		sortedList.insertFirst(3, 3.00); // insert five items
+		sortedList.insertFirst(2, 2.00);
+		sortedList.insertFirst(1, 1.00);
+		sortedList.insertFirst(1, 1.00);
+		sortedList.insertFirst(1, 1.00);
+		sortedList.displayList(); // display list
 	} // end main()
 } // end class LinkListApp
